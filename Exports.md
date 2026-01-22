@@ -20,6 +20,7 @@ else {return ""}
 
 dv.table(["Files", "mtime", "note", "note mtime", 
 //"path"
+"link"
 ], Files
     .map(file => [
     dv.fileLink(file.path),
@@ -27,6 +28,7 @@ dv.table(["Files", "mtime", "note", "note mtime",
     ""+dv.fileLink(file.basename),
     whattime(file.basename),
     //file.path
+    "[🔗](https://rupadarshiray.github.io/notes/"+file.basename.replaceAll(" ","%20")+".pdf)"
     ])
     )
 ```
