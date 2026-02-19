@@ -27,6 +27,7 @@ dv.table(["Files", "mtime", "note", "note mtime",
 //"path"
 "link"
 ], Files
+	.sort(file=> file.basename)
     .map(file => [
     dv.fileLink(file.path),
     String(moment(file.stat.mtime).format("DD-MM-YYYY")),
