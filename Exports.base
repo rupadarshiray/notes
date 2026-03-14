@@ -1,0 +1,41 @@
+summaries:
+  Sum: |
+    (values.sum()/(1024*1024)).round(0)+" MB"
+filters:
+  and:
+    - file.folder == "Exports"
+    - file.ext == "pdf"
+formulas:
+  note: file(file.basename)
+  dif: |
+    file.mtime - file(file.basename).mtime
+  update needed?: if((file.mtime < file(file.basename).mtime), "yes")
+  note ctime: if(file(file.basename).ctime, false, true)
+  exported: file.mtime-now()
+properties:
+  formula.dif:
+    displayName: diff
+views:
+  - type: table
+    name: Table
+    groupBy:
+      property: formula.update needed?
+      direction: ASC
+    order:
+      - file.name
+      - formula.note
+      - file.mtime
+      - formula.dif
+      - formula.exported
+      - file.size
+    sort:
+      - property: formula.dif
+        direction: ASC
+    summaries:
+      file.mtime: Range
+      formula.dif: Filled
+      formula.note: Empty
+      file.size: Sum
+    columnSize:
+      file.size: 125
+    image: note.cssclasses
